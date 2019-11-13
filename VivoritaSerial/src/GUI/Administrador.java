@@ -5,7 +5,9 @@
  */
 package GUI;
 
+import GUI.Admin.Eliminar;
 import GUI.Admin.Puntos;
+import GUI.Admin.Solicitudes;
 import GUI.Admin.Tiempo;
 import GUI.Admin.Usuarios;
 
@@ -63,8 +65,18 @@ public class Administrador extends javax.swing.JFrame {
         });
 
         jButton4.setText("Eliminar usuario");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Confirmar usuario");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("LogOut");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +167,22 @@ public class Administrador extends javax.swing.JFrame {
         a.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    //Eliminar usuarios 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        Eliminar a = new Eliminar();
+        a.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    //Confirmar usuarios
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Solicitudes a = new Solicitudes();
+        a.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

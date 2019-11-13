@@ -26,7 +26,36 @@ public class Run_app {
     public Run_app(){
         //Llamada del constructor
     }
+      
+    /*
+    Metodo para eliminar un usuario
+    */
+    public Boolean eliminar_usuario(String usuario, String t){
+        if(t.equals("U")){
+            for(Usuario i: usuarios){
+                if(i != null){
+                    if(usuario.equals(i.getName())){
+                        usuarios.remove(i);
+                        return true;
+                    }
+                }
+            }
+            return false;    
+        }else{
+            for(Usuario i: solicitudes){
+                if(i != null){
+                    if(usuario.equals(i.getName())){
+                        solicitudes.remove(i);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         
+    }
+    
+    
     /*
     Metodo para el encabezado de los usuarios completo
     */
@@ -44,20 +73,34 @@ public class Run_app {
     /*
     Metodo para las filas de los usuarios completo
     */
-    public Object[][] getFilasT(){
+    public Object[][] getFilasT(String tabla){
         int c = usuarios.size();
         int cont = 0;
-        Object[][] fila = new Object[c][5];            
-        for(Usuario i: usuarios){
-            if(i != null){
-                fila[cont][0] = cont;
-                fila[cont][1] = i.getName();
-                fila[cont][2] = i.getNivel();
-                fila[cont][3] = i.getPuntos();   
-                fila[cont][4] = i.getTiempo();   
-                cont++;
-            }                
+        Object[][] fila = new Object[c][5]; 
+        if(tabla.equals("U")){
+            for(Usuario i: usuarios){
+                if(i != null){
+                    fila[cont][0] = cont;
+                    fila[cont][1] = i.getName();
+                    fila[cont][2] = i.getNivel();
+                    fila[cont][3] = i.getPuntos();   
+                    fila[cont][4] = i.getTiempo();   
+                    cont++;
+                }                
+            }
+        }else{
+            for(Usuario i: solicitudes){
+                if(i != null){
+                    fila[cont][0] = cont;
+                    fila[cont][1] = i.getName();
+                    fila[cont][2] = i.getNivel();
+                    fila[cont][3] = i.getPuntos();   
+                    fila[cont][4] = i.getTiempo();   
+                    cont++;
+                }                
+            }
         }
+        
         return fila;
     }
     
@@ -153,7 +196,7 @@ public class Run_app {
     
     
     /*
-    Metodo que verifica el usuario de contraseña a la hora de iniciar
+    Metodo que verifica el usuario y contraseña a la hora de iniciar
     sesion devuelve un objeto de tipo Usuario
     */
     public Usuario iniciarSesion(String usuario, String contraseña){
@@ -166,6 +209,32 @@ public class Run_app {
         }
         return null;
     }
+    
+    /*
+    Metodo que busca un usuario    
+    */
+    public Usuario buscar_usuario(String usuario, String tabla){
+        if(tabla.equals("U")){
+            for(Usuario i: usuarios){
+                if(i != null){
+                    if(usuario.equals(i.getName())){
+                        return i;
+                    }
+                }
+            }
+            return null;
+        }else{
+            for(Usuario i: solicitudes){
+                if(i != null){
+                    if(usuario.equals(i.getName())){
+                        return i;
+                    }
+                }
+            }
+            return null;
+        }
+        
+    }    
     
     /*
     Metodo que verifica si existe un usuario por medio del nombre

@@ -27,8 +27,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        this.jPasswordField1.setText("12345");
-        this.jTextField1.setText("Admin_ORGA");
+        this.jPasswordField1.setText("123");
+        this.jTextField1.setText("a1");
     }
 
     /**
