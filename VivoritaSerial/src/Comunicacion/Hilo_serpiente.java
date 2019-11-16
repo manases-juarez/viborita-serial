@@ -24,54 +24,68 @@ public class Hilo_serpiente extends Thread{
                 int py = snake.serpiente.get(0).y;
                 for(Led i: Usuario.matriz){
                     if(i.esSnake){
-                        i.esSnake = false;
-                        i.valor = false;
-                        i.boton.setBackground(Color.darkGray);
+                        i.valor = false;                        
                     }
                 }
                 if(Control.right){
-                    System.out.println("moviendo a la derecha");
-                    for(Coordenada i: snake.serpiente){
-                        i.x = px;
-                        i.y = py;
-                        px = i.x;
-                        py = i.y;                        
-                    }
-                    snake.serpiente.get(0).y--;                    
+                    for(int i=0; i<snake.serpiente.size(); i++){
+                        if(i==0){
+                            snake.serpiente.get(0).y--;
+                        }else{
+                            int tempx = snake.serpiente.get(i).x;
+                            int tempy = snake.serpiente.get(i).y;
+                            snake.serpiente.get(i).x = px;
+                            snake.serpiente.get(i).y = py;
+                            px = tempx;
+                            py = tempy;
+                        }
+                    }                     
                 }else if(Control.left){
-                    System.out.println("moviendo a la izquierda");
-                    for(Coordenada i: snake.serpiente){
-                        i.x = px;
-                        i.y = py;
-                        px = i.x;
-                        py = i.y;                        
-                    }
-                    snake.serpiente.get(0).y++; 
+                    for(int i=0; i<snake.serpiente.size(); i++){
+                        if(i==0){
+                            snake.serpiente.get(0).y++;
+                        }else{
+                            int tempx = snake.serpiente.get(i).x;
+                            int tempy = snake.serpiente.get(i).y;
+                            snake.serpiente.get(i).x = px;
+                            snake.serpiente.get(i).y = py;
+                            px = tempx;
+                            py = tempy;
+                        }
+                    } 
                 }else if(Control.up){
-                    System.out.println("moviendo haca arriba");
-                    for(Coordenada i: snake.serpiente){
-                        i.x = px;
-                        i.y = py;
-                        px = i.x;
-                        py = i.y;                        
-                    }
-                    snake.serpiente.get(0).x--;
+                    for(int i=0; i<snake.serpiente.size(); i++){
+                        if(i==0){
+                            snake.serpiente.get(0).x--;
+                        }else{
+                            int tempx = snake.serpiente.get(i).x;
+                            int tempy = snake.serpiente.get(i).y;
+                            snake.serpiente.get(i).x = px;
+                            snake.serpiente.get(i).y = py;
+                            px = tempx;
+                            py = tempy;
+                        }
+                    }                     
                 }else if(Control.down){
-                    System.out.println("moviendo haca abajo");
-                    for(Coordenada i: snake.serpiente){
-                        i.x = px;
-                        i.y = py;
-                        px = i.x;
-                        py = i.y;                        
-                    }
-                    snake.serpiente.get(0).x++;
+                    for(int i=0; i<snake.serpiente.size(); i++){
+                        if(i==0){
+                            snake.serpiente.get(0).x++;
+                        }else{
+                            int tempx = snake.serpiente.get(i).x;
+                            int tempy = snake.serpiente.get(i).y;
+                            snake.serpiente.get(i).x = px;
+                            snake.serpiente.get(i).y = py;
+                            px = tempx;
+                            py = tempy;
+                        }
+                    }                    
                 } 
             }
 
 
             
             try{
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }catch(InterruptedException e){} 
         }
     }

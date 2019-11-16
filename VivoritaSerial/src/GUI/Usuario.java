@@ -12,6 +12,8 @@ import Comunicacion.Led;
 import Comunicacion.Snake;
 import GUI.User.About;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.LinkedList;
 
 /**
@@ -295,6 +297,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         Login a = new Login();
         a.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     //Play
@@ -306,10 +309,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
             hilo1 = new Thread(this);
             serpiente.start();
             hilo1.start();
-        }
-        
-        
-        
+        }                        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -361,40 +361,9 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Usuario().setVisible(true);                
-            }
-        });
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -418,6 +387,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+   
 
     @Override
     public void run() {
@@ -426,10 +396,14 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                 for(Led i:matriz){
                     if(i.valor){
                         i.boton.setBackground(Color.blue);
+                        i.boton.repaint();
                     }else{
                         i.boton.setBackground(Color.darkGray);
                     }
                 }
+                try{
+                Thread.sleep(1);
+            }catch(InterruptedException e){}
                 for(Led i:matriz){
                     Boolean hay = false;
                     Coordenada cor = new Coordenada(0,0);
@@ -437,21 +411,24 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                         if(j.x == i.x && j.y == i.y){
                             i.boton.setBackground(Color.blue);
                             i.esSnake = true;
-                            i.valor = true;
+                            i.valor = true; //Jorge 56358841
                             if(i.esComida){
                                 hay = true;
                                 cor.setCoordenada(i.x, i.y);
+                                Led b = new Led(1,2);
+                                b.pintar_obstaculo(nivel);
                                 i.esComida = false;
                             }
                         }                        
                     }
                     if(hay){
                         Control.snake.serpiente.add(cor);
+                        System.out.println(Control.snake.serpiente.size());
                     }
                 }                
             }            
             try{
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }catch(InterruptedException e){}
         }                
         

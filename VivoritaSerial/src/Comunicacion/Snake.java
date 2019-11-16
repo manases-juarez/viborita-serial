@@ -18,6 +18,7 @@ public class Snake {
     public Snake(){
         serpiente.add(new Coordenada(0, 11));
         serpiente.add(new Coordenada(0, 10));
+        serpiente.add(new Coordenada(0, 9));
     }
     
     
