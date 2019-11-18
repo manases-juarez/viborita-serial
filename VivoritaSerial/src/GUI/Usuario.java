@@ -9,12 +9,11 @@ import Comunicacion.Control;
 import Comunicacion.Coordenada;
 import Comunicacion.Hilo_serpiente;
 import Comunicacion.Led;
-import Comunicacion.Snake;
 import GUI.User.About;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
+import jnpout32.pPort;
 
 /**
  *
@@ -26,7 +25,8 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
     public static LinkedList<Led> matriz = new LinkedList<>();
     public int nivel = 1;
     Thread hilo1;
-    private static final Hilo_serpiente serpiente = new Hilo_serpiente();
+        
+    
     /**
      * Creates new form Usuario
      */
@@ -38,7 +38,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         this.jLabel8.setText(Integer.toString(a.getPuntos()));
         this.jLabel9.setText(Integer.toString(a.getNivel()));
         this.jLabel10.setText(a.getName());
-        
+        this.jButton4.setEnabled(false);
         for(int i=0; i<12; i++){
             for(int j=0; j<12; j++){
                 Led led = new Led(j, i);
@@ -82,6 +82,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         jLabel4.setText("jLabel4");
 
@@ -114,6 +115,11 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         });
 
         jButton3.setText("Fin");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Play");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +150,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 362, Short.MAX_VALUE)
+            .addGap(0, 349, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,6 +185,13 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
             }
         });
 
+        jButton10.setText("Iniciar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,11 +206,13 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
+                                .addContainerGap()
+                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3)
-                                .addGap(36, 36, 36))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,12 +228,11 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                                         .addGap(53, 53, 53)
                                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(51, 51, 51)
+                                        .addGap(35, 35, 35)
                                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(35, 35, 35)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel8)
@@ -226,11 +240,9 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                                     .addComponent(jLabel9))
                                 .addGap(90, 90, 90)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -251,7 +263,8 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
-                            .addComponent(jButton4))
+                            .addComponent(jButton4)
+                            .addComponent(jButton10))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -293,23 +306,20 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
 
     //Salir
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        Control.pause = !Control.pause;
+        Control.snake.serpiente.clear();
+        Control.snake.serpiente.add(new Coordenada(0, 11));
+        Control.snake.serpiente.add(new Coordenada(0, 10));
+        Control.snake.serpiente.add(new Coordenada(0, 9));
         Login a = new Login();
         a.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
     //Play
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        System.out.println(Control.pause);
-        Control.pause = !Control.pause;
-        if(!play){
-            play = true;
-            hilo1 = new Thread(this);
-            serpiente.start();
-            hilo1.start();
-        }                        
+        Control.pause = !Control.pause;                               
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -361,12 +371,39 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    //Iniciar
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        Control.pause = !Control.pause;
+        this.jButton4.setEnabled(true);
+        this.jButton10.setEnabled(false);
+        Hilo_serpiente serpiente = new Hilo_serpiente();
+        if(!play){
+            play = true;
+            hilo1 = new Thread(this);
+            serpiente.start();
+            hilo1.start();
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    //salir
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Login a = new Login();
+        Control.pause = !Control.pause;
+        Control.snake.serpiente.clear();
+        Control.snake.serpiente.add(new Coordenada(0, 11));
+        Control.snake.serpiente.add(new Coordenada(0, 10));
+        Control.snake.serpiente.add(new Coordenada(0, 9));
+        a.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -389,6 +426,17 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
     // End of variables declaration//GEN-END:variables
    
 
+    /*
+    Comunicacion serial por medio del puerto paralelo
+    pin 2: envio de las señales
+    pin 3: clock carga de las señales
+    pin 4:
+    */
+    //pPort puerto = new pPort();
+    short pin2 = 2;
+    short pin3 = 3;
+    short uno = 1;
+    short cero = 0;
     @Override
     public void run() {
         while(play){
@@ -397,17 +445,28 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                     if(i.valor){
                         i.boton.setBackground(Color.blue);
                         i.boton.repaint();
+                        //puerto.setPin(pin2, uno);
                     }else{
+                        //puerto.setPin(pin2, cero);
                         i.boton.setBackground(Color.darkGray);
                     }
+                    //puerto.setPin(pin3, uno);
+                    try{
+                        Thread.sleep(1);
+                    }catch(InterruptedException e){}
+                    //puerto.setPin(pin3, cero);
+                    
                 }
-                try{
-                Thread.sleep(1);
-            }catch(InterruptedException e){}
                 for(Led i:matriz){
-                    Boolean hay = false;
-                    Coordenada cor = new Coordenada(0,0);
+                    Boolean hay = false, muere = false;                   
+                    Coordenada cor = new Coordenada(0,0);                        
                     for(Coordenada j: Control.snake.serpiente){
+                        if(j.x>11 || j.y>11 || j.x<0 || j.y<0){
+                            play = false;
+                            JOptionPane.showMessageDialog(null, "Juego finalizado");
+                            muere = true;
+                            break;
+                        }
                         if(j.x == i.x && j.y == i.y){
                             i.boton.setBackground(Color.blue);
                             i.esSnake = true;
@@ -418,9 +477,15 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                                 Led b = new Led(1,2);
                                 b.pintar_obstaculo(nivel);
                                 i.esComida = false;
+                            }else if(i.esObstaculo){
+                                play = false;
+                                JOptionPane.showMessageDialog(null, "Juego finalizado xd");
                             }
                         }                        
                     }
+                    if(muere)
+                        break;
+                    
                     if(hay){
                         Control.snake.serpiente.add(cor);
                         System.out.println(Control.snake.serpiente.size());
@@ -428,7 +493,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                 }                
             }            
             try{
-                Thread.sleep(500);
+                Thread.sleep(20);
             }catch(InterruptedException e){}
         }                
         
