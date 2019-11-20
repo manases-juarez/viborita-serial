@@ -22,6 +22,7 @@ public class Run_app {
     */
     public LinkedList<Usuario> usuarios = new LinkedList<>();
     public LinkedList<Usuario> solicitudes = new LinkedList<>();
+    public static GUI.Usuario usuario;
     
     public Run_app(){
         //Llamada del constructor

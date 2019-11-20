@@ -16,6 +16,7 @@ public class Control {
     public static Boolean down = false;
     public static Boolean pause = true;
     
+    public static Snake snake = new Snake();
     private Boolean play = false;
     
     public Boolean getPlay(){
@@ -26,7 +27,6 @@ public class Control {
         this.play = play;
     }
     
-    public static Snake snake = new Snake();
     
     public Control(){
         

@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
 /**
  *
@@ -27,6 +26,7 @@ public class VivoritaSerial {
             En el login se colocan las variables estaticas y dinamicas
         */
         Run_app inicio = new Run_app();
+        
         
         /*
         Usuarios de prueba

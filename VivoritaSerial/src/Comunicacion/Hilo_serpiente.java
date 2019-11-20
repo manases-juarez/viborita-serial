@@ -24,7 +24,8 @@ public class Hilo_serpiente extends Thread{
                 int py = snake.serpiente.get(0).y;
                 for(Led i: Usuario.matriz){
                     if(i.esSnake){
-                        i.valor = false;                        
+                        i.valor = false;  
+                        i.esSnake = false;
                     }
                 }
                 if(Control.right){
@@ -80,12 +81,9 @@ public class Hilo_serpiente extends Thread{
                         }
                     }                    
                 } 
-            }
-
-
-            
+            }            
             try{
-                Thread.sleep(500);
+                Thread.sleep(Usuario.velocidad);
             }catch(InterruptedException e){} 
         }
     }

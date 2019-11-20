@@ -7,13 +7,16 @@ package GUI;
 
 import Comunicacion.Control;
 import Comunicacion.Coordenada;
+import Comunicacion.Hilo_comparacion;
 import Comunicacion.Hilo_serpiente;
 import Comunicacion.Led;
+import Comunicacion.Timer;
 import GUI.User.About;
 import java.awt.Color;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import jnpout32.pPort;
+import vivoritaserial.Run_app;
 
 /**
  *
@@ -23,7 +26,10 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
 
     public static Boolean play = false;
     public static LinkedList<Led> matriz = new LinkedList<>();
-    public int nivel = 1;
+    public static int nivel = 1;
+    public static int velocidad = 750;
+    public static int puntos = 0;
+    public static int tiempo = 0;
     Thread hilo1;
         
     
@@ -50,6 +56,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         
         Led b = new Led(1,2);
         b.pintar_obstaculo(nivel);
+        b.pintar_comida(nivel);
         /*
         7 - Tiempo
         8 - Puntos
@@ -150,11 +157,11 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 349, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 331, Short.MAX_VALUE)
+            .addGap(0, 603, Short.MAX_VALUE)
         );
 
         jButton6.setText("Right");
@@ -231,18 +238,21 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                                         .addGap(35, 35, 35)
                                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(35, 35, 35)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel9))
-                                .addGap(90, 90, 90)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -288,9 +298,9 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))))
+                        .addGap(0, 14, Short.MAX_VALUE))))
         );
 
         pack();
@@ -314,6 +324,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         Login a = new Login();
         a.setVisible(true);
         this.dispose();
+        Run_app.usuario = null;
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -377,11 +388,15 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         this.jButton4.setEnabled(true);
         this.jButton10.setEnabled(false);
         Hilo_serpiente serpiente = new Hilo_serpiente();
+        Hilo_comparacion datos = new Hilo_comparacion();
+        Timer timer = new Timer();
         if(!play){
             play = true;
             hilo1 = new Thread(this);
             serpiente.start();
+            datos.start();
             hilo1.start();
+            timer.start();
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -396,10 +411,6 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
         a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -432,7 +443,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
     pin 3: clock carga de las señales
     pin 4:
     */
-    //pPort puerto = new pPort();
+    pPort puerto = new pPort();
     short pin2 = 2;
     short pin3 = 3;
     short uno = 1;
@@ -440,22 +451,27 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
     @Override
     public void run() {
         while(play){
+            this.jLabel7.setText(Integer.toString(tiempo));
+            this.jLabel8.setText(Integer.toString(puntos));
+            this.jLabel9.setText(Integer.toString(nivel));
             if(!Control.pause){
                 for(Led i:matriz){
                     if(i.valor){
                         i.boton.setBackground(Color.blue);
                         i.boton.repaint();
-                        //puerto.setPin(pin2, uno);
+                        puerto.setPin(pin2, uno);
                     }else{
-                        //puerto.setPin(pin2, cero);
-                        i.boton.setBackground(Color.darkGray);
+                        puerto.setPin(pin2, cero);
+                        i.boton.setBackground(Color.white);
                     }
-                    //puerto.setPin(pin3, uno);
+                    puerto.setPin(pin3, uno);
                     try{
                         Thread.sleep(1);
                     }catch(InterruptedException e){}
-                    //puerto.setPin(pin3, cero);
-                    
+                    puerto.setPin(pin3, cero);
+                    try{
+                        Thread.sleep(1);
+                    }catch(InterruptedException e){}                                        
                 }
                 for(Led i:matriz){
                     Boolean hay = false, muere = false;                   
@@ -463,7 +479,7 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                     for(Coordenada j: Control.snake.serpiente){
                         if(j.x>11 || j.y>11 || j.x<0 || j.y<0){
                             play = false;
-                            JOptionPane.showMessageDialog(null, "Juego finalizado");
+                            JOptionPane.showMessageDialog(null, "Juego finalizado 1");
                             muere = true;
                             break;
                         }
@@ -473,28 +489,32 @@ public class Usuario extends javax.swing.JFrame implements Runnable{
                             i.valor = true; //Jorge 56358841
                             if(i.esComida){
                                 hay = true;
+                                puntos = puntos +10;
+                                System.out.println(puntos);
                                 cor.setCoordenada(i.x, i.y);
                                 Led b = new Led(1,2);
-                                b.pintar_obstaculo(nivel);
+                                b.pintar_comida(nivel);
                                 i.esComida = false;
                             }else if(i.esObstaculo){
                                 play = false;
+                                muere = true;
                                 JOptionPane.showMessageDialog(null, "Juego finalizado xd");
                             }
                         }                        
                     }
-                    if(muere)
-                        break;
-                    
+                    if(muere){
+                        Usuarios.Usuario a = Login.inicio.buscar_usuario(Login.app_usuario, "U");
+                        a.setNivel(nivel);
+                        a.setPuntos(puntos);
+                        a.setTiempo(tiempo);
+                        break;                    
+                    }                        
                     if(hay){
                         Control.snake.serpiente.add(cor);
                         System.out.println(Control.snake.serpiente.size());
                     }
                 }                
-            }            
-            try{
-                Thread.sleep(20);
-            }catch(InterruptedException e){}
+            }                       
         }                
         
     }

@@ -160,61 +160,11 @@ public class Login extends javax.swing.JFrame {
                 if(Login.inicio.iniciarSesion(usuario, contraseña) != null){
                     Login.app_contraseña = contraseña;
                     Login.app_usuario = usuario;
-                    GUI.Usuario a = new Usuario();
-                    a.addKeyListener(new KeyListener(){
-                        @Override
-                        public void keyTyped(KeyEvent e) {
-                            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                        }
-
-                        @Override
-                        public void keyPressed(KeyEvent e) {
-                            switch (e.getKeyCode()) {
-                                case KeyEvent.VK_UP:
-                                    System.out.println("hhhh");
-                                    if(!Control.down){
-                                        Control.down = false;
-                                        Control.left = false;
-                                        Control.right = false;
-                                        Control.up = true;
-                                    }
-                                    break;
-                                case KeyEvent.VK_DOWN:
-                                    if(!Control.up){
-                                        Control.down = true;
-                                        Control.left = false;
-                                        Control.right = false;
-                                        Control.up = false;
-                                    }
-                                    break;
-                                case KeyEvent.VK_LEFT:
-                                    if(!Control.right){
-                                        Control.down = false;
-                                        Control.left = true;
-                                        Control.right = false;
-                                        Control.up = false;
-                                    }
-                                    break;
-                                case KeyEvent.VK_RIGHT:
-                                    if(!Control.left){
-                                        Control.down = false;
-                                        Control.left = false;
-                                        Control.right = true;
-                                        Control.up = false;
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-
-                        @Override
-                        public void keyReleased(KeyEvent e) {
-                            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                        }
-                        
-                    });
-                    a.setVisible(true);
+                    Run_app.usuario = new Usuario();
+                    //GUI.Usuario a = new Usuario();
+                    System.out.println("intentando abrir");
+                    Run_app.usuario.setVisible(true);
+                    //a.setVisible(true);
                     this.setVisible(false);
                     //JOptionPane.showMessageDialog(null, "Usted se a autenticado");
                     return;
